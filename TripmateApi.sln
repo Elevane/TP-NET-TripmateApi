@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi", "TripmateApi.csproj", "{B06722A9-9D53-400B-AAB2-2EDDC8317787}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Entities", "..\TripmateApi.Entities\TripmateApi.Entities.csproj", "{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B06722A9-9D53-400B-AAB2-2EDDC8317787}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B06722A9-9D53-400B-AAB2-2EDDC8317787}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B06722A9-9D53-400B-AAB2-2EDDC8317787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
