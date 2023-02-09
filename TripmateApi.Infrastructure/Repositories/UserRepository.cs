@@ -19,5 +19,11 @@ namespace TripmateApi.Infrastructure.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(predicate);
         }
+
+        public async Task Create(User user)
+        {
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

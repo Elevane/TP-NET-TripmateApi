@@ -5,6 +5,8 @@ namespace TripmateApi.Application.Services.Authentification.Interfaces
 {
     public interface IUserService
     {
-        Task<Result<LoginResponseDto>> Authenticate(LoginRequestDto model);
+        Task<Result<LoginRegsiterResponseDto>> Authenticate(LoginRequestDto model);
+
+        Task<Result<LoginRegsiterResponseDto>> Register(RegisterRequestDto model);
     }
 }
