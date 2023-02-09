@@ -72,7 +72,7 @@ namespace TripmateApi.Application.Services.Authentification
 
         public async Task<Result<LoginRegsiterResponseDto>> Register(RegisterRequestDto model)
         {
-            if(model.Password != model.ConfirmPasword)
+            if(model.Password != model.ConfirmPassword)
                 return Result.Failure<LoginRegsiterResponseDto>("Les deux mails ne correspondent pas");
             User exist = await _repo.FindOne(user => user.Email == model.Email);
             if (exist != null)
