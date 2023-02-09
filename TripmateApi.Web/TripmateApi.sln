@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi", "TripmateApi.csproj", "{B06722A9-9D53-400B-AAB2-2EDDC8317787}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripmateApi", "TripmateApi.csproj", "{B06722A9-9D53-400B-AAB2-2EDDC8317787}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Entities", "..\TripmateApi.Entities\TripmateApi.Entities.csproj", "{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripmateApi.Domain", "..\TripmateApi.Entities\TripmateApi.Domain.csproj", "{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Application", "..\TripmateApi.Application\TripmateApi.Application.csproj", "{9FCAEAD9-DD00-4F13-8C07-06ECFCF364D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Infrastructure", "..\TripmateApi.Infrastructure\TripmateApi.Infrastructure.csproj", "{2043ED59-670F-469B-9102-E938B0DE2301}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCAEAD9-DD00-4F13-8C07-06ECFCF364D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCAEAD9-DD00-4F13-8C07-06ECFCF364D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCAEAD9-DD00-4F13-8C07-06ECFCF364D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCAEAD9-DD00-4F13-8C07-06ECFCF364D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2043ED59-670F-469B-9102-E938B0DE2301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2043ED59-670F-469B-9102-E938B0DE2301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2043ED59-670F-469B-9102-E938B0DE2301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2043ED59-670F-469B-9102-E938B0DE2301}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
