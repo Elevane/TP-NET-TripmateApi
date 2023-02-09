@@ -11,6 +11,7 @@ namespace TripmateApi.Infrastructure.Contexts
 {
     public class TripMateSqlContext : DbContext, ITripmateContext
     {
+        public TripMateSqlContext(DbContextOptions options) : base(options) { }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
