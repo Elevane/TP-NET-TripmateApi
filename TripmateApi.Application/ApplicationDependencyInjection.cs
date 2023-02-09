@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using TripmateApi.Application.Common.Options;
 using TripmateApi.Application.Services.Authentification;
 using TripmateApi.Application.Services.Authentification.Interfaces;
 

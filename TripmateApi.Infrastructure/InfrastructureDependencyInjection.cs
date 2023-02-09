@@ -12,7 +12,7 @@ namespace TripmateApi.Infrastructure
         {
            services.AddDbContext<ITripmateContext, TripMateSqlContext>(options =>
             {
-                string connectionString = configuration["ConnectionStrings:DefaultConnection"];
+                string connectionString = configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
                 options.UseMySql(
                     connectionString,
                     ServerVersion.AutoDetect(connectionString),
