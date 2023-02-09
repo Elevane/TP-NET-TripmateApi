@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensionsNet4.0" Version="2.1.1" />
+  </ItemGroup>
+
 </Project>

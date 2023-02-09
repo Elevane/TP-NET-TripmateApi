@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TripmateApi.Entities\TripmateApi.Domain.csproj" />
+    <ProjectReference Include="..\TripmateApi.Application\TripmateApi.Application.csproj" />
   </ItemGroup>
 
 </Project>

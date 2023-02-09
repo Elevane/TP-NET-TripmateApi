@@ -1,4 +1,4 @@
-﻿namespace TripmateApi.Common
+﻿namespace TripmateApi.Application.Common.Models.Authentification
 {
     public class LoginRequestDto
     {
