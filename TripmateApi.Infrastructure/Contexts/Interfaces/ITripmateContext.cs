@@ -6,5 +6,6 @@ namespace TripmateApi.Infrastructure.Contexts.Interfaces
     public interface ITripmateContext
     {
         DbSet<User> Users { get; set; }
+        public Task<int> SaveChangesAsync();
     }
 }

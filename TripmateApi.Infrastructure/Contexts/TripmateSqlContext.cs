@@ -24,5 +24,11 @@ namespace TripmateApi.Infrastructure.Contexts
 
             base.OnModelCreating(builder);
         }
+
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync().ConfigureAwait(false);
+        }
     }
 }
