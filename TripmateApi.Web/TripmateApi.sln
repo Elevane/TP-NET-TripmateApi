@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripmateApi", "TripmateApi.csproj", "{B06722A9-9D53-400B-AAB2-2EDDC8317787}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripmateApi.Domain", "..\TripmateApi.Entities\TripmateApi.Domain.csproj", "{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripmateApi.Domain", "..\TripmateApi.Domain\TripmateApi.Domain.csproj", "{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Application", "..\TripmateApi.Application\TripmateApi.Application.csproj", "{9FCAEAD9-DD00-4F13-8C07-06ECFCF364D7}"
 EndProject
