@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi", "TripmateApi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Entities", "..\TripmateApi.Entities\TripmateApi.Entities.csproj", "{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripmateApi.Entities", "TripmateApi.Entities\TripmateApi.Entities.csproj", "{DD799EF3-7E90-4E84-8DB3-5F4325FDF6F3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB7EF1BC-402C-4173-84BB-E7EA062EAA55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD799EF3-7E90-4E84-8DB3-5F4325FDF6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD799EF3-7E90-4E84-8DB3-5F4325FDF6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD799EF3-7E90-4E84-8DB3-5F4325FDF6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD799EF3-7E90-4E84-8DB3-5F4325FDF6F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
