@@ -18,7 +18,22 @@ namespace TripmateApi.Application.Services.Trajets
             _context = context;
             _mapper=mapper;
         }
+        public async Task<Result> Update(UpdateTrajetRequestDto dto, int driverId)
+        {
+            
+            Trajet exist = await _context.Trajets.Where(trajet =>
+            trajet.DriverId == driverId && dto.Id == trajet.Id).Include(t => t.Steps).ThenInclude(s => s.PostitionDepart).Include(t => t.Steps).ThenInclude(s => s.PostitionArrival).FirstOrDefaultAsync();
+            if (exist == null)
+                return Result.Failure("Trajet you want to update doesn't exist");
 
+            Trajet newValues = _mapper.Map<Trajet>(dto);
+            exist.Steps = newValues.Steps;
+          
+             _context.Trajets.Update(exist);
+            await _context.SaveChangesAsync();
+
+            return Result.Success();
+        }
         public async Task<Result> Create(CreateTrajetRequestDto dto, int driverId)
         {
             List<Trajet> trajets = await _context.Trajets.Where(trajet =>
