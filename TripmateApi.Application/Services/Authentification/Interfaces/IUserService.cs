@@ -8,5 +8,7 @@ namespace TripmateApi.Application.Services.Authentification.Interfaces
         Task<Result<LoginRegsiterResponseDto>> Authenticate(LoginRequestDto model);
 
         Task<Result<LoginRegsiterResponseDto>> Register(RegisterRequestDto model);
+
+        Result<InternalAuthenticatedUserDto> Get(string email);
     }
 }

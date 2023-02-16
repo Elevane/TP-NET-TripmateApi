@@ -4,6 +4,7 @@ using System.Reflection;
 using TripmateApi.Application.Common.Options;
 using TripmateApi.Application.Services.Authentification;
 using TripmateApi.Application.Services.Authentification.Interfaces;
+using TripmateApi.Application.Services.Trajets;
 
 namespace TripmateApi.Application
 {
@@ -13,6 +14,7 @@ namespace TripmateApi.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<TrajetService>();
         }
     }
 }

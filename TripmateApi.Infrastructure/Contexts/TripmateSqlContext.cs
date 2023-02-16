@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TripmateApi.Domain.Entities;
 using TripmateApi.Entities.Entities;
 using TripmateApi.Infrastructure.Contexts.Interfaces;
 
@@ -13,6 +14,7 @@ namespace TripmateApi.Infrastructure.Contexts
     {
         public TripMateSqlContext(DbContextOptions options) : base(options) { }
         public DbSet<User> Users { get; set; }
+         public DbSet<Trajet> Trajets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -20,7 +22,10 @@ namespace TripmateApi.Infrastructure.Contexts
             {
                 user.HasIndex(u => u.Id);
             });
-
+            builder.Entity<Trajet>(trajet =>
+            {
+                trajet.HasIndex(t => t.Id);
+            });
 
             base.OnModelCreating(builder);
         }
