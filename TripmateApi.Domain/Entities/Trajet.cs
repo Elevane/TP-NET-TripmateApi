@@ -22,8 +22,8 @@ namespace TripmateApi.Domain.Entities
             foreach (Trajet trajet in listTrajets) {
                 if (trajet.Steps == null || trajet.Steps.Count < 1)
                     continue;
-                if(Steps.Count > 0 && Steps.Any(s => trajet.Steps.Any(d => d.PostitionArrival.City == s.PostitionArrival.City) &&
-                  trajet.Steps.Any(d => d.PostitionDepart.City == s.PostitionDepart.City) &&
+                if(Steps.Count > 0 && Steps.Any(s => trajet.Steps.Any(d => d?.PositionArrival?.City == s?.PositionArrival?.City) &&
+                  trajet.Steps.Any(d => d?.PositionDepart?.City == s?.PositionDepart?.City) &&
                   trajet.Steps.Any(d => d.DepartTime.Hour == s.DepartTime.Hour && d.DepartTime.Day == s.DepartTime.Day && d.DepartTime.Month == d.DepartTime.Month && d.DepartTime.Year ==  d.DepartTime.Year)))
                         return true;       
             }

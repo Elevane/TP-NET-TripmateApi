@@ -4,9 +4,9 @@
     {
         public int Id { get; set; }
         public DateTime DepartTime { get; set; }
-        public Position PostitionDepart { get; set; }
-        public Position PostitionArrival { get; set; }
+        public Position PositionDepart { get; set; }
+        public Position PositionArrival { get; set; }
         public int? Duration { get; set; }
-        public int Seats { get; set; }
+        public int? Seats { get; set; }
     }
 }

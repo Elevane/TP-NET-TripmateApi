@@ -25,7 +25,6 @@ namespace TripmateApi.Infrastructure.Contexts
             builder.Entity<Trajet>(trajet =>
             {
                 trajet.HasIndex(t => t.Id);
-                trajet.HasMany(t => t.Steps);
             });
 
             base.OnModelCreating(builder);

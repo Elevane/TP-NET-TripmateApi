@@ -79,8 +79,8 @@ namespace TripmateApi.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DepartTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    PostitionDepartId = table.Column<int>(type: "int", nullable: false),
-                    PostitionArrivalId = table.Column<int>(type: "int", nullable: false),
+                    PositionDepartId = table.Column<int>(type: "int", nullable: false),
+                    PositionArrivalId = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: true),
                     Seats = table.Column<int>(type: "int", nullable: false),
                     TrajetId = table.Column<int>(type: "int", nullable: true)
@@ -89,14 +89,14 @@ namespace TripmateApi.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Step", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Step_Position_PostitionArrivalId",
-                        column: x => x.PostitionArrivalId,
+                        name: "FK_Step_Position_PositionArrivalId",
+                        column: x => x.PositionArrivalId,
                         principalTable: "Position",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Step_Position_PostitionDepartId",
-                        column: x => x.PostitionDepartId,
+                        name: "FK_Step_Position_PositionDepartId",
+                        column: x => x.PositionDepartId,
                         principalTable: "Position",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -109,14 +109,14 @@ namespace TripmateApi.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Step_PostitionArrivalId",
+                name: "IX_Step_PositionArrivalId",
                 table: "Step",
-                column: "PostitionArrivalId");
+                column: "PositionArrivalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Step_PostitionDepartId",
+                name: "IX_Step_PositionDepartId",
                 table: "Step",
-                column: "PostitionDepartId");
+                column: "PositionDepartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Step_TrajetId",
