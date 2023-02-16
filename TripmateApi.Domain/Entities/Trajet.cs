@@ -10,15 +10,25 @@ namespace TripmateApi.Domain.Entities
     public class Trajet
     {
         public int Id { get; set; }
-        public Position PostitionDepart { get; set; }
-        public Position PostitionArrival { get; set; }
-        public DateTime DepartTime { get; set; }
-        public int? Duration { get; set; }
 
         public User Driver { get; set; }
         public int DriverId { get; set; }
 
-        public int Seats { get; set; }
-        public List<Position>? Steps { get; set; }
+        public List<Step> Steps { get; set; }
+
+
+        public bool HasSameTrajet(List<Trajet> listTrajets)
+        {
+            foreach (Trajet trajet in listTrajets) {
+                if (trajet.Steps == null || trajet.Steps.Count < 1)
+                    continue;
+                if(Steps.Count > 0 && Steps.Any(s => trajet.Steps.Any(d => d.PostitionArrival.City == s.PostitionArrival.City) &&
+                  trajet.Steps.Any(d => d.PostitionDepart.City == s.PostitionDepart.City) &&
+                  trajet.Steps.Any(d => d.DepartTime.Hour == s.DepartTime.Hour && d.DepartTime.Day == s.DepartTime.Day && d.DepartTime.Month == d.DepartTime.Month && d.DepartTime.Year ==  d.DepartTime.Year)))
+                        return true;       
+            }
+            return false;
+        }
+        
     }
 }
