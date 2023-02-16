@@ -31,5 +31,15 @@ namespace TripmateApi.Controllers
                 return BadRequest(res.Error);
             return Ok();
         }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UpdateTrajetRequestDto request)
+        {
+            Result res = await _service.Update(request, _contextUser.Id);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok();
+        }
     }
 }
