@@ -22,7 +22,7 @@ namespace TripmateApi.Application.Services.Trajets
         public async Task<Result> Create(CreateTrajetRequestDto dto, int driverId)
         {
             List<Trajet> trajets = await _context.Trajets.Where(trajet =>
-            trajet.DriverId == driverId).ToListAsync();
+            trajet.DriverId == driverId).Include(t => t.Steps).ThenInclude(s => s.PostitionDepart).Include(t => t.Steps).ThenInclude(s => s.PostitionArrival).ToListAsync();
             Trajet toCreate = _mapper.Map<Trajet>(dto);
             if(toCreate.HasSameTrajet(trajets))
                 return Result.Failure("User already has trajet with same departure & and arrival point on the same date");    

@@ -20,9 +20,11 @@ namespace TripmateApi.Domain.Entities
         public bool HasSameTrajet(List<Trajet> listTrajets)
         {
             foreach (Trajet trajet in listTrajets) {
-                if(Steps.Any(s => trajet.Steps.Any(d => d.PostitionArrival.City == s.PostitionArrival.City) &&
+                if (trajet.Steps == null || trajet.Steps.Count < 1)
+                    continue;
+                if(Steps.Count > 0 && Steps.Any(s => trajet.Steps.Any(d => d.PostitionArrival.City == s.PostitionArrival.City) &&
                   trajet.Steps.Any(d => d.PostitionDepart.City == s.PostitionDepart.City) &&
-                  trajet.Steps.Any(d => d.DepartTime == s.DepartTime)))
+                  trajet.Steps.Any(d => d.DepartTime.Hour == s.DepartTime.Hour && d.DepartTime.Day == s.DepartTime.Day && d.DepartTime.Month == d.DepartTime.Month && d.DepartTime.Year ==  d.DepartTime.Year)))
                         return true;       
             }
             return false;
