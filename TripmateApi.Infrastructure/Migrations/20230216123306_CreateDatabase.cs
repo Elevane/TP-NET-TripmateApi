@@ -6,11 +6,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TripmateApi.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Position",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    City = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Address = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Pc = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Position", x => x.Id);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -35,51 +53,16 @@ namespace TripmateApi.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Position",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    City = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Address = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Pc = table.Column<int>(type: "int", nullable: false),
-                    TrajetId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Position", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Trajets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PostitionDepartId = table.Column<int>(type: "int", nullable: false),
-                    PostitionArrivalId = table.Column<int>(type: "int", nullable: false),
-                    DepartTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time(6)", nullable: true),
                     DriverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trajets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Trajets_Position_PostitionArrivalId",
-                        column: x => x.PostitionArrivalId,
-                        principalTable: "Position",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Trajets_Position_PostitionDepartId",
-                        column: x => x.PostitionDepartId,
-                        principalTable: "Position",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Trajets_Users_DriverId",
                         column: x => x.DriverId,
@@ -89,9 +72,55 @@ namespace TripmateApi.Infrastructure.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Step",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DepartTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    PostitionDepartId = table.Column<int>(type: "int", nullable: false),
+                    PostitionArrivalId = table.Column<int>(type: "int", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: true),
+                    Seats = table.Column<int>(type: "int", nullable: false),
+                    TrajetId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Step", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Step_Position_PostitionArrivalId",
+                        column: x => x.PostitionArrivalId,
+                        principalTable: "Position",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Step_Position_PostitionDepartId",
+                        column: x => x.PostitionDepartId,
+                        principalTable: "Position",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Step_Trajets_TrajetId",
+                        column: x => x.TrajetId,
+                        principalTable: "Trajets",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
-                name: "IX_Position_TrajetId",
-                table: "Position",
+                name: "IX_Step_PostitionArrivalId",
+                table: "Step",
+                column: "PostitionArrivalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Step_PostitionDepartId",
+                table: "Step",
+                column: "PostitionDepartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Step_TrajetId",
+                table: "Step",
                 column: "TrajetId");
 
             migrationBuilder.CreateIndex(
@@ -105,39 +134,21 @@ namespace TripmateApi.Infrastructure.Migrations
                 column: "Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trajets_PostitionArrivalId",
-                table: "Trajets",
-                column: "PostitionArrivalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Trajets_PostitionDepartId",
-                table: "Trajets",
-                column: "PostitionDepartId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_Id",
                 table: "Users",
                 column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Position_Trajets_TrajetId",
-                table: "Position",
-                column: "TrajetId",
-                principalTable: "Trajets",
-                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Position_Trajets_TrajetId",
-                table: "Position");
-
             migrationBuilder.DropTable(
-                name: "Trajets");
+                name: "Step");
 
             migrationBuilder.DropTable(
                 name: "Position");
+
+            migrationBuilder.DropTable(
+                name: "Trajets");
 
             migrationBuilder.DropTable(
                 name: "Users");

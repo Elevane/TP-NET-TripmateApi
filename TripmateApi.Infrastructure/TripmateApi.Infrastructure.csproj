@@ -15,4 +15,8 @@
     <ProjectReference Include="..\TripmateApi.Domain\TripmateApi.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

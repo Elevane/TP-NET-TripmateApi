@@ -9,11 +9,11 @@ using TripmateApi.Domain.Entities;
 
 namespace TripmateApi.Application.Common.Models.Trajets
 {
-    public class CreateTrajetRequestPositionDto : IMapFrom<Position>
+    public class PositionDto : IMapFrom<Position>
     {
         public string City { get; set; }
         public string Address { get; set; }
         public int Pc { get; set; }
-        public void Mapping(Profile profile) => profile.CreateMap<CreateTrajetRequestPositionDto, Position>().ReverseMap();
+        public void Mapping(Profile profile) => profile.CreateMap<PositionDto, Position>().ReverseMap();
     }
 }

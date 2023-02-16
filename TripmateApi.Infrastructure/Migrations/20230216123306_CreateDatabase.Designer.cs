@@ -11,8 +11,8 @@ using TripmateApi.Infrastructure.Contexts;
 namespace TripmateApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TripMateSqlContext))]
-    [Migration("20230216104646_DurationINSeconds")]
-    partial class DurationINSeconds
+    [Migration("20230216123306_CreateDatabase")]
+    partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,17 +38,12 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.Property<int>("Pc")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TrajetId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TrajetId");
 
                     b.ToTable("Position");
                 });
 
-            modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
+            modelBuilder.Entity("TripmateApi.Domain.Entities.Step", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,11 +52,8 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.Property<DateTime>("DepartTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("DriverId")
+                    b.Property<int?>("Duration")
                         .HasColumnType("int");
-
-                    b.Property<TimeSpan?>("Duration")
-                        .HasColumnType("time(6)");
 
                     b.Property<int>("PostitionArrivalId")
                         .HasColumnType("int");
@@ -72,15 +64,34 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.Property<int>("Seats")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TrajetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostitionArrivalId");
+
+                    b.HasIndex("PostitionDepartId");
+
+                    b.HasIndex("TrajetId");
+
+                    b.ToTable("Step");
+                });
+
+            modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
 
                     b.HasIndex("Id");
-
-                    b.HasIndex("PostitionArrivalId");
-
-                    b.HasIndex("PostitionDepartId");
 
                     b.ToTable("Trajets");
                 });
@@ -114,21 +125,8 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TripmateApi.Domain.Entities.Position", b =>
+            modelBuilder.Entity("TripmateApi.Domain.Entities.Step", b =>
                 {
-                    b.HasOne("TripmateApi.Domain.Entities.Trajet", null)
-                        .WithMany("Steps")
-                        .HasForeignKey("TrajetId");
-                });
-
-            modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
-                {
-                    b.HasOne("TripmateApi.Entities.Entities.User", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TripmateApi.Domain.Entities.Position", "PostitionArrival")
                         .WithMany()
                         .HasForeignKey("PostitionArrivalId")
@@ -141,11 +139,24 @@ namespace TripmateApi.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Driver");
+                    b.HasOne("TripmateApi.Domain.Entities.Trajet", null)
+                        .WithMany("Steps")
+                        .HasForeignKey("TrajetId");
 
                     b.Navigation("PostitionArrival");
 
                     b.Navigation("PostitionDepart");
+                });
+
+            modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
+                {
+                    b.HasOne("TripmateApi.Entities.Entities.User", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
