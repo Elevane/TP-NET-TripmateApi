@@ -12,6 +12,7 @@ namespace TripmateApi.Application.Common.Models.Trajets
 {
     public class CreateTrajetRequestDto : IMapFrom<Trajet>
     {
+        public bool isSingleStep { get => Steps.Count > 1; }
         public List<StepDto> Steps { get; set; }
 
         public void Mapping(Profile profile) => profile.CreateMap<CreateTrajetRequestDto, Trajet>().ReverseMap();
