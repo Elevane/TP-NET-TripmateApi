@@ -16,8 +16,6 @@ namespace TripmateApi.Application.Common.Models.Trajets
         public Position PostitionArrival { get; set; }
         public DateTime DepartTime { get; set; }
         public TimeSpan? Duration { get; set; }
-
-        public User Driver { get; set; }
         public List<Position>? Steps { get; set; }
 
         public void Mapping(Profile profile) => profile.CreateMap<CreateTrajetRequestDto, Trajet>().ReverseMap();

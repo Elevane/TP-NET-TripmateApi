@@ -1,29 +1,35 @@
 ﻿using AutoMapper;
 using CSharpFunctionalExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TripmateApi.Application.Common.Models.Trajets;
-using TripmateApi.Infrastructure.Repositories.Trajets;
+using TripmateApi.Domain.Entities;
+using TripmateApi.Infrastructure.Contexts.Interfaces;
 
 namespace TripmateApi.Application.Services.Trajets
 {
     public class TrajetService 
     {
-        private readonly TrajetsRepository _trajetsRepository;
+        private readonly ITripmateContext _context;
         private readonly IMapper _mapper;
 
-        public TrajetService(TrajetsRepository trajetsRepository, IMapper mapper)
+        public TrajetService(ITripmateContext context, IMapper mapper)
         {
-            _trajetsRepository= trajetsRepository;
+            _context = context;
             _mapper=mapper;
         }
 
-
-        public async Task<Result> Create(CreateTrajetRequestDto dto)
+        public async Task<Result> Create(CreateTrajetRequestDto dto, int driverId)
         {
+            Trajet exist = await _context.Trajets.FirstOrDefaultAsync(trajet => trajet.DriverId == driverId && trajet.PostitionDepart.City == dto.PostitionDepart.City && trajet.PostitionDepart.City == dto.PostitionDepart.City && trajet.DepartTime  == dto.DepartTime);
+            if (exist != null)
+                return Result.Failure("User already has trajet with same departure & and arrival point on the same date");
+
+            Trajet toCreate = _mapper.Map<Trajet>(dto);
+            toCreate.DriverId = driverId;
+
+            await _context.Trajets.AddAsync(toCreate);
+            await _context.SaveChangesAsync();
+
             return Result.Success();
         }
     }

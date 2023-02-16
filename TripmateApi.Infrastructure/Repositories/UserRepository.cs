@@ -15,9 +15,14 @@ namespace TripmateApi.Infrastructure.Repositories
         private readonly ITripmateContext _context;
         public UserRepository(ITripmateContext context) => _context = context;
 
-        public async Task<User> FindOne(Expression<Func<User, bool>> predicate)
+        public async Task<User> FindOneASync(Expression<Func<User, bool>> predicate)
         {
             return await _context.Users.FirstOrDefaultAsync(predicate);
+        }
+
+        public User FindOne(Expression<Func<User, bool>> predicate)
+        {
+            return  _context.Users.FirstOrDefault(predicate);
         }
 
         public async Task Create(User user)

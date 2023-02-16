@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -30,6 +31,17 @@ namespace TripmateApi.Application.Services.Authentification
             _options = options;
             _repo = repo;
         }
+
+        public Result<InternalAuthenticatedUserDto> Get(string email)
+        {
+            User user = _repo.FindOne(user => user.Email == email);
+            if (user == null)
+                return Result.Failure<InternalAuthenticatedUserDto>("Could not find user");
+            InternalAuthenticatedUserDto response = _mapper.Map<InternalAuthenticatedUserDto>(user);
+            if (response == null)
+                return Result.Failure<InternalAuthenticatedUserDto>("Could not map user into Authenticate response");
+            return Result.Success(response);
+        }
         private string generateHashedPassword(string password)
         {
             SHA256 sha256Hash = SHA256.Create();
@@ -45,7 +57,7 @@ namespace TripmateApi.Application.Services.Authentification
         public async Task<Result<LoginRegsiterResponseDto>> Authenticate(LoginRequestDto model)
         {
             string hashedPassword = generateHashedPassword(model.Password);
-            User exist = await _repo.FindOne(user => user.Email == model.Email && user.Password == hashedPassword);
+            User exist = await _repo.FindOneASync(user => user.Email == model.Email && user.Password == hashedPassword);
             if (exist == null)
                 return Result.Failure<LoginRegsiterResponseDto>("Aucun utilisateur n'a été trouvé avec cet email & ce mot de passe");
             LoginRegsiterResponseDto response = new LoginRegsiterResponseDto()
@@ -74,7 +86,7 @@ namespace TripmateApi.Application.Services.Authentification
         {
             if(model.Password != model.ConfirmPassword)
                 return Result.Failure<LoginRegsiterResponseDto>("Les deux mails ne correspondent pas");
-            User exist = await _repo.FindOne(user => user.Email == model.Email);
+            User exist = await _repo.FindOneASync(user => user.Email == model.Email);
             if (exist != null)
                 return Result.Failure<LoginRegsiterResponseDto>("Cet email est déjà utilisé");
             User toCreate = _mapper.Map<User>(model);

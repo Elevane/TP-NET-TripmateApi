@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TripmateApi.Infrastructure.Contexts;
 using TripmateApi.Infrastructure.Contexts.Interfaces;
 using TripmateApi.Infrastructure.Repositories;
-using TripmateApi.Infrastructure.Repositories.Trajets;
 
 namespace TripmateApi.Infrastructure
 {
@@ -13,7 +12,6 @@ namespace TripmateApi.Infrastructure
         public static void AddInfrastrucure(this IServiceCollection services, IConfiguration configuration)
         {
            services.AddScoped<UserRepository>();
-            services.AddScoped<TrajetsRepository>();   
            services.AddDbContext<ITripmateContext, TripMateSqlContext>(options =>
             {
                 string connectionString = configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
