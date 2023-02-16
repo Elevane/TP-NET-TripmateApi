@@ -12,11 +12,11 @@ namespace TripmateApi.Application.Common.Models.Trajets
 {
     public class CreateTrajetRequestDto : IMapFrom<Trajet>
     {
-        public Position PostitionDepart { get; set; }
-        public Position PostitionArrival { get; set; }
+        public CreateTrajetRequestPositionDto PostitionDepart { get; set; }
+        public CreateTrajetRequestPositionDto PostitionArrival { get; set; }
         public DateTime DepartTime { get; set; }
-        public TimeSpan? Duration { get; set; }
-        public List<Position>? Steps { get; set; }
+        public int? Duration { get; set; }
+        public List<CreateTrajetRequestPositionDto>? Steps { get; set; }
 
         public void Mapping(Profile profile) => profile.CreateMap<CreateTrajetRequestDto, Trajet>().ReverseMap();
     }

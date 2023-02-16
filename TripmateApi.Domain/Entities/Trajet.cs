@@ -13,10 +13,12 @@ namespace TripmateApi.Domain.Entities
         public Position PostitionDepart { get; set; }
         public Position PostitionArrival { get; set; }
         public DateTime DepartTime { get; set; }
-        public TimeSpan? Duration { get; set; }
+        public int? Duration { get; set; }
 
         public User Driver { get; set; }
         public int DriverId { get; set; }
+
+        public int Seats { get; set; }
         public List<Position>? Steps { get; set; }
     }
 }

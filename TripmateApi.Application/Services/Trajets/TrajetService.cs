@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using TripmateApi.Application.Common.Models.Trajets;
 using TripmateApi.Domain.Entities;
+using TripmateApi.Entities.Entities;
 using TripmateApi.Infrastructure.Contexts.Interfaces;
 
 namespace TripmateApi.Application.Services.Trajets
@@ -25,7 +26,9 @@ namespace TripmateApi.Application.Services.Trajets
                 return Result.Failure("User already has trajet with same departure & and arrival point on the same date");
 
             Trajet toCreate = _mapper.Map<Trajet>(dto);
+            User driver = await _context.Users.FirstOrDefaultAsync(user => user.Id == driverId);
             toCreate.DriverId = driverId;
+            toCreate.Driver = driver;
 
             await _context.Trajets.AddAsync(toCreate);
             await _context.SaveChangesAsync();

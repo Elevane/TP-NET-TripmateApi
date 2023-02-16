@@ -22,7 +22,10 @@ namespace TripmateApi.Infrastructure.Contexts
             {
                 user.HasIndex(u => u.Id);
             });
-
+            builder.Entity<Trajet>(trajet =>
+            {
+                trajet.HasIndex(t => t.Id);
+            });
 
             base.OnModelCreating(builder);
         }

@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using TripmateApi.Application.Common.Models.Authentification;
+using TripmateApi.Application.Common.Options;
 using TripmateApi.Application.Services.Authentification.Interfaces;
 
 namespace TripmateApi.Common.Authentification
@@ -11,9 +12,9 @@ namespace TripmateApi.Common.Authentification
     public class JwtMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly AppSettings _appSettings;
+        private readonly AuthSettings _appSettings;
 
-        public JwtMiddleware(RequestDelegate next, IOptions<AppSettings> appSettings)
+        public JwtMiddleware(RequestDelegate next, IOptions<AuthSettings> appSettings)
         {
             _next = next;
             _appSettings = appSettings.Value;

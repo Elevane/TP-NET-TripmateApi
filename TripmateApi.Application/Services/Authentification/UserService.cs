@@ -29,6 +29,7 @@ namespace TripmateApi.Application.Services.Authentification
         {
             _mapper = mapper;
             _options = options;
+            if(_options.Value.Secret == null) throw new NullReferenceException($"{nameof(options.Value.Secret)} property was null while activating UserService");
             _repo = repo;
         }
 
