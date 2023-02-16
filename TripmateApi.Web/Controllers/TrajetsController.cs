@@ -23,6 +23,28 @@ namespace TripmateApi.Controllers
         }
 
         [Authorize]
+        [HttpPost("query")]
+        public async Task<IActionResult> GetAll([FromBody] GetAllTrajetQueryDto query)
+        {
+            Result<List<GetAllTrajetResponseDto>> res = await _service.FindAll(query);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok(res.Value);
+        }
+
+        [Authorize]
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            Result<List<GetAllTrajetResponseDto>> res = await _service.FindAllUser(_contextUser.Id);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok(res.Value);
+        }
+
+        
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateTrajetRequestDto request)
         {

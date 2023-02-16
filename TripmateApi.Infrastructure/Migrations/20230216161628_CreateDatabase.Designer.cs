@@ -11,7 +11,7 @@ using TripmateApi.Infrastructure.Contexts;
 namespace TripmateApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TripMateSqlContext))]
-    [Migration("20230216123306_CreateDatabase")]
+    [Migration("20230216161628_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,10 +55,10 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostitionArrivalId")
+                    b.Property<int>("PositionArrivalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostitionDepartId")
+                    b.Property<int>("PositionDepartId")
                         .HasColumnType("int");
 
                     b.Property<int>("Seats")
@@ -69,9 +69,9 @@ namespace TripmateApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostitionArrivalId");
+                    b.HasIndex("PositionArrivalId");
 
-                    b.HasIndex("PostitionDepartId");
+                    b.HasIndex("PositionDepartId");
 
                     b.HasIndex("TrajetId");
 
@@ -127,15 +127,15 @@ namespace TripmateApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Step", b =>
                 {
-                    b.HasOne("TripmateApi.Domain.Entities.Position", "PostitionArrival")
+                    b.HasOne("TripmateApi.Domain.Entities.Position", "PositionArrival")
                         .WithMany()
-                        .HasForeignKey("PostitionArrivalId")
+                        .HasForeignKey("PositionArrivalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TripmateApi.Domain.Entities.Position", "PostitionDepart")
+                    b.HasOne("TripmateApi.Domain.Entities.Position", "PositionDepart")
                         .WithMany()
-                        .HasForeignKey("PostitionDepartId")
+                        .HasForeignKey("PositionDepartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -143,9 +143,9 @@ namespace TripmateApi.Infrastructure.Migrations
                         .WithMany("Steps")
                         .HasForeignKey("TrajetId");
 
-                    b.Navigation("PostitionArrival");
+                    b.Navigation("PositionArrival");
 
-                    b.Navigation("PostitionDepart");
+                    b.Navigation("PositionDepart");
                 });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
