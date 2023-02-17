@@ -19,7 +19,7 @@ namespace TripmateApi.Controllers
             _contextAccessor= httpContextAccessor;
             _service = service;
             _contextUser = (IInternalUser)_contextAccessor.HttpContext.Items["User"];
-            if(_contextUser == null ) throw new NullReferenceException("Internal User is set null whil activating TrajetsController");
+            if(_contextUser == null || _contextUser.Id == null || _contextUser.Email == null) throw new NullReferenceException("Internal User is set null whil activating TrajetsController");
         }
 
         [Authorize]
@@ -30,6 +30,16 @@ namespace TripmateApi.Controllers
             if (res.IsFailure)
                 return BadRequest(res.Error);
             return Ok(res.Value);
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Result res = await _service.Delete(id, _contextUser.Id);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok();
         }
 
         [Authorize]

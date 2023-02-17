@@ -18,7 +18,19 @@ namespace TripmateApi.Application.Services.Trajets
             _context = context;
             _mapper=mapper;
         }
-
+        
+        public async Task<Result> Delete(int trajetId, int driverId)
+        {
+            Trajet exist = await _context.Trajets.FirstOrDefaultAsync(t => t.Id == trajetId);
+            if(exist == null)
+                return Result.Failure<List<GetAllTrajetResponseDto>>("No matching trajet was found with this Id.");
+            if(exist.DriverId != driverId)
+                return Result.Failure<List<GetAllTrajetResponseDto>>("You are not allowed to delete this trajet.");
+            _context.Steps.RemoveRange(_context.Steps.Where(s => s.TrajetId == trajetId));
+            _context.Trajets.Remove(exist);
+            await _context.SaveChangesAsync();
+            return Result.Success();
+        }
         public async Task<Result<List<GetAllTrajetResponseDto>>> FindAllUser(int driverId)
         {
             List<Trajet> trajets = await _context.Trajets.Where(
