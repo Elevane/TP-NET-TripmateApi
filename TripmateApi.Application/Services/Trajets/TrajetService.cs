@@ -26,6 +26,7 @@ namespace TripmateApi.Application.Services.Trajets
                 return Result.Failure<List<GetAllTrajetResponseDto>>("No matching trajet was found with this Id.");
             if(exist.DriverId != driverId)
                 return Result.Failure<List<GetAllTrajetResponseDto>>("You are not allowed to delete this trajet.");
+            _context.Steps.RemoveRange(_context.Steps.Where(s => s.TrajetId == trajetId));
             _context.Trajets.Remove(exist);
             await _context.SaveChangesAsync();
             return Result.Success();

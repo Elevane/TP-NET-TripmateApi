@@ -16,6 +16,8 @@ namespace TripmateApi.Infrastructure.Contexts
         public DbSet<User> Users { get; set; }
          public DbSet<Trajet> Trajets { get; set; }
 
+         public DbSet<Step> Steps { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>(user =>
@@ -25,6 +27,13 @@ namespace TripmateApi.Infrastructure.Contexts
             builder.Entity<Trajet>(trajet =>
             {
                 trajet.HasIndex(t => t.Id);
+            });
+            builder.Entity<Step>(step =>
+            {
+                step.ToTable("step");
+                step.HasIndex(s => s.Id);
+                step.HasOne(s => s.PositionDepart).WithOne().HasForeignKey<Step>(s => s.PositionDepartId).OnDelete(DeleteBehavior.Cascade);
+                step.HasOne(s => s.PositionArrival).WithOne().HasForeignKey<Step>(s => s.PositionArrivalId).OnDelete(DeleteBehavior.Cascade);
             });
 
             base.OnModelCreating(builder);
