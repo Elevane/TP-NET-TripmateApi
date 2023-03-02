@@ -61,16 +61,12 @@ builder.Services.AddSwaggerGen(option =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseMiddleware<JwtMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
