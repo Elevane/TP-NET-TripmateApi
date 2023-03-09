@@ -37,7 +37,7 @@ namespace TripmateApi.Application.Services.Trajets
                 trajet => 
                 trajet.DriverId == driverId && 
                 trajet.Steps.Any(step=> 
-                    step.DepartTime.AddSeconds(Convert.ToDouble(step.Duration)) < DateTime.UtcNow)
+                    step.DepartTime.AddSeconds(Convert.ToDouble(step.Duration)) > DateTime.UtcNow)
                 )
                 .Include(t => t.Steps)
                 .ThenInclude(s => s.PositionDepart)
