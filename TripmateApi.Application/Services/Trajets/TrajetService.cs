@@ -86,6 +86,7 @@ namespace TripmateApi.Application.Services.Trajets
         {
             Inscription exist = await _context.Inscriptions.Where(i => i.Id == inscriptionId).Include(i => i.Steps).Include(i => i.Trajet).FirstOrDefaultAsync();
             if (exist == null) return Result.Failure("Inscriptions you are trying to validate doesn't exist");
+            if (exist.User == null || exist.Trajet == null || exist.Steps == null) return Result.Failure("The Inscription you want to validate has either no driver nor trajet nor steps.");
             Trajet trajet = await _context.Trajets.Where(t => t.Id == exist.Trajet.Id).Include(t => t.Steps).ThenInclude(s => s.Passangers).FirstOrDefaultAsync();
             if (trajet == null) return Result.Failure("trajet of the inscription doesn't exist");
             if (!trajet.HasRoom(exist.Steps.Select(s => s.Id).ToList())) return Result.Failure("Trajet has not enough room anymore");
