@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripmateApi.Infrastructure.Contexts;
 
@@ -10,29 +11,15 @@ using TripmateApi.Infrastructure.Contexts;
 namespace TripmateApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TripMateSqlContext))]
-    partial class TripMateSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230309095918_addInscription")]
+    partial class addInscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("InscriptionStep", b =>
-                {
-                    b.Property<int>("InscriptionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StepsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InscriptionsId", "StepsId");
-
-                    b.HasIndex("StepsId");
-
-                    b.ToTable("InscriptionStep");
-                });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Inscription", b =>
                 {
@@ -89,6 +76,9 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<int?>("InscriptionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PositionArrivalId")
                         .HasColumnType("int");
 
@@ -104,6 +94,8 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("InscriptionId");
 
                     b.HasIndex("PositionArrivalId")
                         .IsUnique();
@@ -163,21 +155,6 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("InscriptionStep", b =>
-                {
-                    b.HasOne("TripmateApi.Domain.Entities.Inscription", null)
-                        .WithMany()
-                        .HasForeignKey("InscriptionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TripmateApi.Domain.Entities.Step", null)
-                        .WithMany()
-                        .HasForeignKey("StepsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TripmateApi.Domain.Entities.Inscription", b =>
                 {
                     b.HasOne("TripmateApi.Domain.Entities.Trajet", "Trajet")
@@ -199,6 +176,10 @@ namespace TripmateApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Step", b =>
                 {
+                    b.HasOne("TripmateApi.Domain.Entities.Inscription", null)
+                        .WithMany("Steps")
+                        .HasForeignKey("InscriptionId");
+
                     b.HasOne("TripmateApi.Domain.Entities.Position", "PositionArrival")
                         .WithOne()
                         .HasForeignKey("TripmateApi.Domain.Entities.Step", "PositionArrivalId")
@@ -231,6 +212,11 @@ namespace TripmateApi.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("TripmateApi.Domain.Entities.Inscription", b =>
+                {
+                    b.Navigation("Steps");
                 });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>

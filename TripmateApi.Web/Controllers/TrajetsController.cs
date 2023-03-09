@@ -65,6 +65,16 @@ namespace TripmateApi.Controllers
         }
 
         [Authorize]
+        [HttpPost("{trajetId}")]
+        public async Task<IActionResult> Inscription(InscriptionTrajetRequestDto request)
+        {
+            Result res = await _service.Inscription(request, _contextUser.Id);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok();
+        }
+
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateTrajetRequestDto request)
         {

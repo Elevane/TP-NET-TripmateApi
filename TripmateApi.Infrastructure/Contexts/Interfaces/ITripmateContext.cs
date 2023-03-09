@@ -8,7 +8,8 @@ namespace TripmateApi.Infrastructure.Contexts.Interfaces
     {
         DbSet<User> Users { get; set; }
         DbSet<Trajet> Trajets { get; set; }
-        public DbSet<Step> Steps { get; set; }
+        DbSet<Step> Steps { get; set; }
+        DbSet<Inscription> Inscriptions { get; set; }
         public Task<int> SaveChangesAsync();
     }
 }
