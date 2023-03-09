@@ -1,4 +1,6 @@
-﻿namespace TripmateApi.Domain.Entities
+﻿using TripmateApi.Entities.Entities;
+
+namespace TripmateApi.Domain.Entities
 {
     public class Step
     {
@@ -9,6 +11,7 @@
         public Position PositionArrival { get; set; }
         public int PositionArrivalId { get; set; }
 
+        public List<User> Passangers { get; set; }
         public List<Inscription>? Inscriptions { get; set; }
         public int TrajetId { get; set; }
         public int? Duration { get; set; }

@@ -75,6 +75,15 @@ namespace TripmateApi.Controllers
         }
 
         [Authorize]
+        [HttpPost("valider/{inscriptionId}")]
+        public async Task<IActionResult> ValidationInscription(int inscriptionId)
+        {
+            Result res = await _service.Validate(inscriptionId, _contextUser.Id);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok();
+        }
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateTrajetRequestDto request)
         {

@@ -1,4 +1,6 @@
 ﻿
+using TripmateApi.Domain.Entities;
+
 namespace TripmateApi.Entities.Entities
 {
     public class User
@@ -8,5 +10,6 @@ namespace TripmateApi.Entities.Entities
         public string Firstname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public List<Step>? Voyages { get; set; }
     }
 }

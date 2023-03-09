@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripmateApi.Infrastructure.Contexts;
 
@@ -10,9 +11,10 @@ using TripmateApi.Infrastructure.Contexts;
 namespace TripmateApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TripMateSqlContext))]
-    partial class TripMateSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230309104153_InscriptionValisation")]
+    partial class InscriptionValisation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,21 +34,6 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.HasIndex("StepsId");
 
                     b.ToTable("InscriptionStep");
-                });
-
-            modelBuilder.Entity("StepUser", b =>
-                {
-                    b.Property<int>("PassangersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VoyagesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PassangersId", "VoyagesId");
-
-                    b.HasIndex("VoyagesId");
-
-                    b.ToTable("StepUser");
                 });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Inscription", b =>
@@ -174,9 +161,14 @@ namespace TripmateApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("StepId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("StepId");
 
                     b.ToTable("Users");
                 });
@@ -192,21 +184,6 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.HasOne("TripmateApi.Domain.Entities.Step", null)
                         .WithMany()
                         .HasForeignKey("StepsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("StepUser", b =>
-                {
-                    b.HasOne("TripmateApi.Entities.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("PassangersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TripmateApi.Domain.Entities.Step", null)
-                        .WithMany()
-                        .HasForeignKey("VoyagesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -264,6 +241,18 @@ namespace TripmateApi.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("TripmateApi.Entities.Entities.User", b =>
+                {
+                    b.HasOne("TripmateApi.Domain.Entities.Step", null)
+                        .WithMany("Passangers")
+                        .HasForeignKey("StepId");
+                });
+
+            modelBuilder.Entity("TripmateApi.Domain.Entities.Step", b =>
+                {
+                    b.Navigation("Passangers");
                 });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Trajet", b =>
