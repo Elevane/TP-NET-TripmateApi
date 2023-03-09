@@ -57,5 +57,21 @@ namespace TripmateApi.Domain.Entities
             }
             return passengerSteps;
         }
+
+        public void AddPassengerToSteps(User user, List<Step> steps)
+        {
+           foreach(Step step in Steps)
+            {
+                if(steps.Contains(step)) step.Passangers.Add(user);
+            }
+        }
+
+        public void RemoveSteats(List<Step> steps)
+        {
+            foreach (Step step in Steps)
+            {
+                if (steps.Contains(step)) step.Seats -= 1;
+            }
+        }
     }
 }

@@ -33,6 +33,7 @@ namespace TripmateApi.Infrastructure.Contexts
             {
                 step.ToTable("step");
                 step.HasIndex(s => s.Id);
+                step.HasMany(s => s.Passangers).WithMany(u => u.Voyages);
                 step.HasOne(s => s.PositionDepart).WithOne().HasForeignKey<Step>(s => s.PositionDepartId).OnDelete(DeleteBehavior.Cascade);
                 step.HasOne(s => s.PositionArrival).WithOne().HasForeignKey<Step>(s => s.PositionArrivalId).OnDelete(DeleteBehavior.Cascade);
             });

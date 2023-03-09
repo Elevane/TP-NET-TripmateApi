@@ -14,12 +14,13 @@ namespace TripmateApi.Domain.Entities
         public Trajet Trajet { get; set; }
         public List<Step> Steps { get; set; }
 
+        public bool validate { get; set; }
 
         private Inscription() { }
 
         public Inscription (User user, Trajet trajet, List<Step> steps)
         {
-            User = user; Trajet = trajet; Steps = steps;
+            User = user; Trajet = trajet; Steps = steps; validate = false;
         }
     }
 }

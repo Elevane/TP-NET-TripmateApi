@@ -81,7 +81,27 @@ namespace TripmateApi.Application.Services.Trajets
             List<GetAllTrajetResponseDto> dtos = _mapper.Map<List<GetAllTrajetResponseDto>>(trajets);
             return Result.Success(dtos);
         }
-            
+
+        public async Task<Result> Validate(int inscriptionId, int userId)
+        {
+            Inscription exist = await _context.Inscriptions.Where(i => i.Id == inscriptionId).Include(i => i.Steps).Include(i => i.Trajet).FirstOrDefaultAsync();
+            if (exist == null) return Result.Failure("Inscriptions you are trying to validate doesn't exist");
+            Trajet trajet = await _context.Trajets.Where(t => t.Id == exist.Trajet.Id).Include(t => t.Steps).ThenInclude(s => s.Passangers).FirstOrDefaultAsync();
+            if (trajet == null) return Result.Failure("trajet of the inscription doesn't exist");
+            if (!trajet.HasRoom(exist.Steps.Select(s => s.Id).ToList())) return Result.Failure("Trajet has not enough room anymore");
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) return Result.Failure("User trying to validate to trajet doesn't exist.");
+            trajet.AddPassengerToSteps(user, exist.Steps);
+            trajet.RemoveSteats(exist.Steps);
+
+            exist.validate = true;
+            _context.Inscriptions.Update(exist);
+            _context.Trajets.Update(trajet);
+
+            await _context.SaveChangesAsync();
+            return Result.Success();
+        }
+
         public async Task<Result> Update(UpdateTrajetRequestDto dto, int driverId)
         {
             
