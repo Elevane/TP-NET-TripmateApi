@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripmateApi.Infrastructure.Contexts;
 
@@ -10,9 +11,10 @@ using TripmateApi.Infrastructure.Contexts;
 namespace TripmateApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TripMateSqlContext))]
-    partial class TripMateSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230309100830_updateInscription")]
+    partial class updateInscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

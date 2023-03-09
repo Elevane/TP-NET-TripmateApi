@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripmateApi.Infrastructure.Contexts;
 
@@ -10,50 +11,15 @@ using TripmateApi.Infrastructure.Contexts;
 namespace TripmateApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TripMateSqlContext))]
-    partial class TripMateSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230309081413_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("InscriptionStep", b =>
-                {
-                    b.Property<int>("InscriptionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StepsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InscriptionsId", "StepsId");
-
-                    b.HasIndex("StepsId");
-
-                    b.ToTable("InscriptionStep");
-                });
-
-            modelBuilder.Entity("TripmateApi.Domain.Entities.Inscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrajetId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TrajetId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("inscriptions", (string)null);
-                });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Position", b =>
                 {
@@ -161,40 +127,6 @@ namespace TripmateApi.Infrastructure.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("InscriptionStep", b =>
-                {
-                    b.HasOne("TripmateApi.Domain.Entities.Inscription", null)
-                        .WithMany()
-                        .HasForeignKey("InscriptionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TripmateApi.Domain.Entities.Step", null)
-                        .WithMany()
-                        .HasForeignKey("StepsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TripmateApi.Domain.Entities.Inscription", b =>
-                {
-                    b.HasOne("TripmateApi.Domain.Entities.Trajet", "Trajet")
-                        .WithMany()
-                        .HasForeignKey("TrajetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TripmateApi.Entities.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Trajet");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TripmateApi.Domain.Entities.Step", b =>

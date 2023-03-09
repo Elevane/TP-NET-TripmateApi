@@ -29,6 +29,33 @@ namespace TripmateApi.Domain.Entities
             }
             return false;
         }
-        
+
+        public bool HasSteps(List<int> steps)
+        {
+            foreach (int step in steps)
+            {
+                if (Steps.FirstOrDefault(x => x.Id == step) == null) return false;
+            }
+            return true;
+        }
+
+        public bool HasRoom(List<int> steps)
+        {
+            foreach (int step in steps)
+            {
+                if (Steps.FirstOrDefault(x => x.Id == step).Seats < 1) return false;
+            }
+            return true;
+        }
+
+        public List<Step> GetPassengerSteps(List<int> steps)
+        {
+            List<Step> passengerSteps = new List<Step>();
+            foreach (Step step in Steps)
+            {
+                if(steps.Contains(step.Id)) passengerSteps.Add(step);
+            }
+            return passengerSteps;
+        }
     }
 }

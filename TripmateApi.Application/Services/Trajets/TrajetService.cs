@@ -114,5 +114,25 @@ namespace TripmateApi.Application.Services.Trajets
 
             return Result.Success();
         }
+    
+        public async Task<Result> Inscription(InscriptionTrajetRequestDto request, int userId)
+        {
+            Trajet exist =await  _context.Trajets.Where(t => t.Id == request.TrajetId).Include(t => t.Steps).FirstOrDefaultAsync();
+            if (exist == null)
+                return Result.Failure("Trajet you trying to join doesn't exist.");
+            if(!exist.HasSteps(request.Steps))
+                return Result.Failure("The trajet you trying to join has not the steps you are giving.");
+            if(!exist.HasRoom(request.Steps))
+                return Result.Failure("Trajet you trying to join has no room left for the steps selected.");
+
+            User passenger = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (passenger == null)
+                return Result.Failure("Passenger doesn't exist");
+            List<Step> passengerSteps = exist.GetPassengerSteps(request.Steps);
+            Inscription toCreate = new Inscription(passenger, exist, passengerSteps);
+            _context.Inscriptions.Add(toCreate);
+            await _context.SaveChangesAsync();
+            return Result.Success();
+        }
     }
 }

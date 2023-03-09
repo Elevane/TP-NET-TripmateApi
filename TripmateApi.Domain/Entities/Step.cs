@@ -9,6 +9,7 @@
         public Position PositionArrival { get; set; }
         public int PositionArrivalId { get; set; }
 
+        public List<Inscription>? Inscriptions { get; set; }
         public int TrajetId { get; set; }
         public int? Duration { get; set; }
         public int? Seats { get; set; }
