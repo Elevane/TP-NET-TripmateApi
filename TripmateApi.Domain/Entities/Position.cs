@@ -8,7 +8,7 @@
         
         public double Longitude { get; set; }
         
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
         public int Pc { get; set; }
     }
 }
