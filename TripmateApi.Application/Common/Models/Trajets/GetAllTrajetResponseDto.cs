@@ -13,6 +13,7 @@ namespace TripmateApi.Application.Common.Models.Trajets
 {
     public class GetAllTrajetResponseDto : IMapFrom<Trajet>
     {
+        public int Id {get; set;}
         public UserDto Driver { get; set; }
         public bool isSingleStep { get => Steps.Count > 1; }
         public List<StepDto> Steps { get; set; }

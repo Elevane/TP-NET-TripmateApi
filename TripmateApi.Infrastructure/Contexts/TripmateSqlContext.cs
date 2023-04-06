@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TripmateApi.Domain.Entities;
 using TripmateApi.Entities.Entities;
 using TripmateApi.Infrastructure.Contexts.Interfaces;
@@ -12,6 +7,7 @@ namespace TripmateApi.Infrastructure.Contexts
 {
     public class TripMateSqlContext : DbContext, ITripmateContext
     {
+        
         public TripMateSqlContext(DbContextOptions options) : base(options) { }
         public DbSet<User> Users { get; set; }
          public DbSet<Trajet> Trajets { get; set; }
@@ -21,12 +17,18 @@ namespace TripmateApi.Infrastructure.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Position>(pos =>
+            {
+                pos.ToTable("position");
+            });
             builder.Entity<User>(user =>
             {
+                user.ToTable("users");
                 user.HasIndex(u => u.Id);
             });
             builder.Entity<Trajet>(trajet =>
             {
+                trajet.ToTable("trajets");
                 trajet.HasIndex(t => t.Id);
             });
             builder.Entity<Step>(step =>

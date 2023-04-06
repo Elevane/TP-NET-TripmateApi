@@ -26,7 +26,7 @@ namespace TripmateApi.Controllers
         [HttpPost("query")]
         public async Task<IActionResult> GetAll([FromBody] GetAllTrajetQueryDto query)
         {
-            Result<List<GetAllTrajetResponseDto>> res = await _service.FindAll(query);
+            Result<List<GetAllTrajetResponseDto>> res = await _service.FindAll(query, _contextUser.Id);
             if (res.IsFailure)
                 return BadRequest(res.Error);
             return Ok(res.Value);
