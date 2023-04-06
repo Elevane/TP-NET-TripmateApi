@@ -47,7 +47,7 @@ namespace TripmateApi.Application.Services.Trajets
             List<GetAllTrajetResponseDto> dtos = _mapper.Map<List<GetAllTrajetResponseDto>>(trajets);
             return Result.Success(dtos);
         }
-        public async Task<Result<List<GetAllTrajetResponseDto>>> FindAll(GetAllTrajetQueryDto query)
+        public async Task<Result<List<GetAllTrajetResponseDto>>> FindAll(GetAllTrajetQueryDto query, int userId)
         {
             List<Trajet> trajets = null;
             if(query.PositionDepart != null)
@@ -77,7 +77,7 @@ namespace TripmateApi.Application.Services.Trajets
                 trajets.Select(trajet => trajet.Steps.Any(step => step.DepartTime < query.MaxDepartTime));
             if (trajets == null)
                 return Result.Failure<List<GetAllTrajetResponseDto>>("No matching trajet was found with this query");
-
+            trajets = trajets.Where(t => t.DriverId != userId).ToList();
             List<GetAllTrajetResponseDto> dtos = _mapper.Map<List<GetAllTrajetResponseDto>>(trajets);
             return Result.Success(dtos);
         }
