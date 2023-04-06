@@ -1,5 +1,6 @@
 ﻿
 using TripmateApi.Domain.Entities;
+using System;
 
 namespace TripmateApi.Entities.Entities
 {
