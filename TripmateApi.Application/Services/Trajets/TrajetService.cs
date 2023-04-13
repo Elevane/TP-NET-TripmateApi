@@ -155,5 +155,15 @@ namespace TripmateApi.Application.Services.Trajets
             await _context.SaveChangesAsync();
             return Result.Success();
         }
+
+        public async Task<Result<List<GetAllInscriptionRequestDto>>> GetInscriptions(int trajetId){
+
+            Trajet exist = await _context.Trajets.FirstOrDefaultAsync(t => t.Id == trajetId);
+            if(exist == null)
+                return Result.Failure<List<GetAllInscriptionRequestDto>>("Trajet you are trying to get inscriptions from does not exist");
+            List<Inscription> inscriptions = await _context.Inscriptions.Where( i => i.Trajet.Id == trajetId).ToListAsync();
+            List<GetAllInscriptionRequestDto> dto = _mapper.Map<List<GetAllInscriptionRequestDto>>(inscriptions);
+            return Result.Success(dto);
+        }
     }
 }

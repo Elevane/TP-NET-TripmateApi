@@ -11,6 +11,7 @@ namespace TripmateApi.Application.Common.Models.Trajets
 {
     public class StepDto : IMapFrom<Step>
     {
+        public int Id {get ;set;}
         public DateTime DepartTime { get; set; }
         public PositionDto PositionDepart { get; set; }
         public PositionDto PositionArrival { get; set; }
