@@ -165,5 +165,12 @@ namespace TripmateApi.Application.Services.Trajets
             List<GetAllInscriptionRequestDto> dto = _mapper.Map<List<GetAllInscriptionRequestDto>>(inscriptions);
             return Result.Success(dto);
         }
+
+        public async Task<Result<List<GetAllInscriptionRequestDto>>> GetUserInscriptions(int userId){
+
+            List<Inscription> inscriptions = await _context.Inscriptions.Where(t => t.User.Id == userId).ToListAsync();
+            List<GetAllInscriptionRequestDto> dto = _mapper.Map<List<GetAllInscriptionRequestDto>>(inscriptions);
+            return Result.Success(dto);
+        }
     }
 }
