@@ -49,19 +49,24 @@ namespace TripmateApi.Application.Services.Trajets
         }
         public async Task<Result<List<GetAllTrajetResponseDto>>> FindAll(GetAllTrajetQueryDto query, int userId)
         {
+            if(query.PositionDepart == null)
+                return Result.Failure<List<GetAllTrajetResponseDto>>("Query position Depart is null and should not be .");
             List<Trajet> trajets = null;
-            if(query.PositionDepart != null)
                 trajets = await _context.Trajets.Where(trajet =>
                 trajet.Steps.Any(step => step.PositionDepart.Address == query.PositionDepart.Address) &&
                 trajet.Steps.Any(step => step.PositionDepart.City == query.PositionDepart.City) &&
                 trajet.Steps.Any(step => step.PositionDepart.Pc == query.PositionDepart.Pc) 
-                ).Include((Trajet t) => t.Steps).ThenInclude((Step s) => s.PositionDepart).Include((Trajet t) => t.Steps).ThenInclude((Step s) => s.PositionArrival).ToListAsync();
+                ).Include((Trajet t) => t.Steps).ThenInclude((Step s) => s.PositionDepart).Include((Trajet t) => t.Steps).ThenInclude((Step s) => s.PositionArrival).Include(s => s.Driver).ToListAsync();
+            
+            
             if (query.PositionArrival != null)
                 trajets.Select( trajet =>
                 trajet.Steps.Any(step => step.PositionArrival.Address == query.PositionArrival.Address) &&
                 trajet.Steps.Any(step => step.PositionArrival.City == query.PositionArrival.City) &&
                 trajet.Steps.Any(step => step.PositionArrival.Pc == query.PositionArrival.Pc)
                 );
+
+               
             if (query.MinDuration != null && query.MaxDuration != null)
                 trajets.Select(trajet => trajet.Steps.Any(step => step.Duration < query.MaxDuration && step.Duration > query.MinDuration));
             if(query.MinDuration != null && query.MaxDuration == null)
@@ -71,9 +76,9 @@ namespace TripmateApi.Application.Services.Trajets
 
             if (query.MinDepartTime != null && query.MaxDepartTime != null)
                 trajets.Select(trajet => trajet.Steps.Any(step => step.DepartTime < query.MaxDepartTime && step.DepartTime > query.MinDepartTime));
-            if (query.MinDepartTime != null && query.MaxDepartTime == null)
+            else if (query.MinDepartTime != null && query.MaxDepartTime == null)
                 trajets.Select(trajet => trajet.Steps.Any(step => step.DepartTime > query.MinDepartTime));
-            if (query.MinDepartTime == null && query.MaxDepartTime != null)
+            else if (query.MinDepartTime == null && query.MaxDepartTime != null)
                 trajets.Select(trajet => trajet.Steps.Any(step => step.DepartTime < query.MaxDepartTime));
             if (trajets == null)
                 return Result.Failure<List<GetAllTrajetResponseDto>>("No matching trajet was found with this query");
