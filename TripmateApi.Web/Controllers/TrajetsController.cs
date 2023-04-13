@@ -43,6 +43,16 @@ namespace TripmateApi.Controllers
         }
 
         [Authorize]
+        [HttpGet("inscriptions")]
+        public async Task<IActionResult> Inscriptions(int trajetId){
+            Result<List<GetAllInscriptionRequestDto>> res = await _service.GetInscriptions(trajetId);
+            if (res.IsFailure)
+                return BadRequest(res.Error);
+            return Ok(res.Value);
+
+        }
+
+        [Authorize]
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUser()
         {
