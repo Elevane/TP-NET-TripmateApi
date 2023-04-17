@@ -163,7 +163,7 @@ namespace TripmateApi.Application.Services.Trajets
 
         public async Task<Result<List<GetAllInscriptionRequestDto>>> GetInscriptions(int trajetId){
 
-            Trajet exist = await _context.Trajets.FirstOrDefaultAsync(t => t.Id == trajetId);
+            Trajet exist = await  _context.Trajets.Where(t => t.Id == trajetId).Include(t => t.Driver).Include(t => t.Steps).ThenInclude(s => s.PositionArrival).Include(t => t.Steps).ThenInclude(s => s.PositionDepart).FirstOrDefaultAsync();
             if(exist == null)
                 return Result.Failure<List<GetAllInscriptionRequestDto>>("Trajet you are trying to get inscriptions from does not exist");
             List<Inscription> inscriptions = await _context.Inscriptions.Where( i => i.Trajet.Id == trajetId).ToListAsync();
