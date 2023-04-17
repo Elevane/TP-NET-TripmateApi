@@ -21,7 +21,7 @@ namespace TripmateApi.Application.Services.Trajets
         
         public async Task<Result<GetOneTrajetDto>> GetOneTrajet(int trajetId)
         {
-            Trajet exist = await _context.Trajets.FirstOrDefaultAsync(t => t.Id == trajetId);
+            Trajet exist = await _context.Trajets.Where(t => t.Id == trajetId).Include(t => t.Driver).Include(t => t.Steps).ThenInclude(s => s.PositionArrival).Include(t => t.Steps).ThenInclude(s => s.PositionDepart).FirstOrDefaultAsync();
             if(exist == null)
                 return Result.Failure<GetOneTrajetDto>("No matching trajet was found with this Id.");
            GetOneTrajetDto dto = _mapper.Map<GetOneTrajetDto>(exist);
